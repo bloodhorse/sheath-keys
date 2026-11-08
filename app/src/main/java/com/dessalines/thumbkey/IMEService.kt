@@ -40,6 +40,9 @@ private const val PANEL_RADIUS_DP = 22f
 private const val PANEL_BLUR_DP = 40f
 private const val PANEL_FROST = 0xCC101012.toInt()
 private const val PANEL_SOLID = 0xF2101012.toInt()
+// thevoid's light: Dawnfox's quiet surface, milky
+private const val PANEL_FROST_LIGHT = 0xCCF2E9E1.toInt()
+private const val PANEL_SOLID_LIGHT = 0xF2F2E9E1.toInt()
 
 class IMEService :
     InputMethodService(),
@@ -143,11 +146,28 @@ class IMEService :
     private val panelBackground = GradientDrawable()
     private var blurListener: Consumer<Boolean>? = null
 
+    private fun night() =
+        resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK ==
+            android.content.res.Configuration.UI_MODE_NIGHT_YES
+
+    private fun panel(blur: Boolean) =
+        if (night()) {
+            if (blur) PANEL_FROST else PANEL_SOLID
+        } else {
+            if (blur) PANEL_FROST_LIGHT else PANEL_SOLID_LIGHT
+        }
+
+    // thevoid's `light` flips android's night mode; the panel follows it like the keys do
+    override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
+        super.onConfigurationChanged(newConfig)
+        dressPanel()
+    }
+
     private fun dressPanel() {
         val w = window?.window ?: return
         val density = resources.displayMetrics.density
         panelBackground.cornerRadius = PANEL_RADIUS_DP * density
-        panelBackground.setColor(PANEL_SOLID)
+        panelBackground.setColor(panel(false))
         w.setBackgroundDrawable(panelBackground)
         // only the top corners are round; the bottom edge is flush with the screen's. the blur only
         // rounds all four corners alike (a top-only outline makes it square, and the unrounded blur
@@ -163,7 +183,7 @@ class IMEService :
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val wm = getSystemService(WindowManager::class.java)
             val frost = { blur: Boolean ->
-                panelBackground.setColor(if (blur) PANEL_FROST else PANEL_SOLID)
+                panelBackground.setColor(panel(blur))
                 w.setBackgroundBlurRadius(if (blur) (PANEL_BLUR_DP * density).toInt() else 0)
             }
             frost(wm.isCrossWindowBlurEnabled)

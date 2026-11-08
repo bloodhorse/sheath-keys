@@ -1519,8 +1519,32 @@ fun magma(): Pair<ColorScheme, ColorScheme> {
 }
 
 // thevoid: a dark frost panel (drawn by the IME window, see IMEService.dressPanel) with keys of
-// translucent white on it and a hairline edge, after Wurstfinger. no tint. same for light and dark.
-fun thevoid(): Pair<ColorScheme, ColorScheme> {
+// translucent white on it and a hairline edge, after Wurstfinger. no tint. light is thevoid's light
+// theme (Dawnfox, bekh's kitty light): the same keys in its ink on a milky panel. thevoid's `light`
+// flips android's night mode, so the system theme mode picks between them.
+fun thevoid(): Pair<ColorScheme, ColorScheme> = Pair(thevoidLight(), thevoidDark())
+
+private fun thevoidLight(): ColorScheme {
+    val page = Color(0xFFFAF4ED)
+    val ink = Color(0xFF575279)
+    val tile = Color(0x0F575279)
+    val pressed = Color(0x2E575279)
+    val soft = Color(0xFF797593)
+    return lightColorScheme(
+        primary = ink, onPrimary = page, primaryContainer = Color(0xFFF2E9E1), onPrimaryContainer = ink,
+        inversePrimary = pressed, secondary = soft, onSecondary = page, secondaryContainer = Color(0xFFF2E9E1),
+        onSecondaryContainer = ink, tertiary = ink, onTertiary = page, tertiaryContainer = Color(0x1F575279),
+        onTertiaryContainer = ink, background = page, onBackground = ink, surface = tile, onSurface = ink,
+        surfaceVariant = tile, onSurfaceVariant = soft, surfaceTint = page, inverseSurface = ink,
+        inverseOnSurface = page, error = Color(0xFFB4637A), onError = page, errorContainer = Color(0xFFF2E9E1),
+        onErrorContainer = ink, outline = Color(0x21575279), outlineVariant = Color(0xFFDFDAD9), scrim = ink,
+        surfaceBright = page, surfaceDim = Color(0xFFF2E9E1), surfaceContainerLowest = page,
+        surfaceContainerLow = Color(0xFFF7F0E8), surfaceContainer = Color(0xFFF2E9E1),
+        surfaceContainerHigh = Color(0xFFEDE3DA), surfaceContainerHighest = Color(0xFFE8DDD3),
+    )
+}
+
+private fun thevoidDark(): ColorScheme {
     val black = Color(0xFF000000)
     val tile = Color(0x0FFFFFFF)
     val pressed = Color(0x2EFFFFFF)
@@ -1565,5 +1589,5 @@ fun thevoid(): Pair<ColorScheme, ColorScheme> {
             surfaceContainerHigh = Color(0xFF181818),
             surfaceContainerHighest = Color(0xFF1E1E1E),
         )
-    return Pair(scheme, scheme)
+    return scheme
 }

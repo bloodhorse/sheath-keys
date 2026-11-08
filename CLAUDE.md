@@ -30,6 +30,9 @@ mostly defaults, no new settings; a user can still pick any upstream theme or la
   the db, so new entries only go at the end): tiles white at 6%, pressed 18%, hairline outline white at
   13% (`DEFAULT_KEY_BORDER_WIDTH` 4 = 0.4 dp), flicks `#B5B5B7`, symbols the same at half alpha
   (`MUTED`). measured off Wurstfinger: panel `#22`, tile `#2D`, outline `#42`, flicks `#B5`, symbols `#6C`.
+- **light**: `thevoid()` is a pair, Dawnfox for light (ink `#575279` keys at 6%, flicks `#797593`, panel
+  `#F2E9E1` at 80%) and the dark above. thevoid's `light` word flips android's night mode, the system theme
+  mode picks the pair's half, and `IMEService.onConfigurationChanged` re-dresses the panel to match.
 - **sizes** (`fontSizeVariantToFontSize`): the big letter is the key / 2.9 (was 2.5), flicks / 4 (was
   5), Wurstfinger's proportions. big letter Medium weight, the rest Normal (upstream bolds everything).
 - **no press animation**: upstream flashed the key and dropped the typed letter down it; both
