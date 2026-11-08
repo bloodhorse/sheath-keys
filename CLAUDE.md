@@ -19,6 +19,10 @@ mostly defaults, no new settings; a user can still pick any upstream theme or la
   outline, so the drawable goes on before the blur. if cross-window blur is off (battery saver, older
   Android) the tint goes to 95% instead, via `addCrossWindowBlurEnabledListener`. the keys sit 6 dp
   inside it (`PANEL_INSET_DP` in `Utils.kt`: view padding, and subtracted in `getAutoKeyWidth`).
+  only the top corners are round, the bottom edge is flush with the screen's: the blur rounds all four
+  corners alike or none (a top-only outline is a path, and the blur goes square and shows unrounded
+  past the top corners), so the window hangs one radius below the screen (`FLAG_LAYOUT_NO_LIMITS`,
+  `y = -radius`), its rounded bottom corners off it, and the view gets that radius back as padding.
 - **the system's IME nav buttons** (back chevron, keyboard switcher) used to hang over the space bar
   and return; on API 35+ the IME hides its caption bar (`insetsController.hide(captionBar())`) and
   Android drops them.

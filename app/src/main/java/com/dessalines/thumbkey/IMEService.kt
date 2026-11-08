@@ -59,8 +59,10 @@ class IMEService :
         }
 
         val view = ComposeKeyboardView(this, settingsRepo, clipboardRepo)
-        val inset = (PANEL_INSET_DP * resources.displayMetrics.density).toInt()
-        view.setPadding(inset, inset, inset, inset)
+        val density = resources.displayMetrics.density
+        val inset = (PANEL_INSET_DP * density).toInt()
+        // the window hangs one corner radius below the screen (dressPanel), so the keys get it back
+        view.setPadding(inset, inset, inset, inset + (PANEL_RADIUS_DP * density).toInt())
         window?.window?.decorView?.let { decorView ->
             decorView.setViewTreeLifecycleOwner(this)
             decorView.setViewTreeViewModelStoreOwner(this)
@@ -147,6 +149,12 @@ class IMEService :
         panelBackground.cornerRadius = PANEL_RADIUS_DP * density
         panelBackground.setColor(PANEL_SOLID)
         w.setBackgroundDrawable(panelBackground)
+        // only the top corners are round; the bottom edge is flush with the screen's. the blur only
+        // rounds all four corners alike (a top-only outline makes it square, and the unrounded blur
+        // then shows past the top corners), so the window hangs one radius below the screen instead,
+        // and its rounded bottom corners are off it.
+        w.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        w.attributes = w.attributes.apply { y = -(PANEL_RADIUS_DP * density).toInt() }
         // API 35+: an IME that hides its caption bar takes the system's back and switcher buttons
         // off its bottom edge, where they'd hang over the space bar and return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
