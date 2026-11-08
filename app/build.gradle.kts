@@ -18,7 +18,7 @@ android {
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.dessalines.thumbkey"
+        applicationId = "com.bekh.sheath.keys"
         minSdk = 24
         targetSdk = 37
         versionCode = 190

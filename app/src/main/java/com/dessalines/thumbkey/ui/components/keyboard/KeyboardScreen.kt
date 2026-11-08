@@ -276,17 +276,6 @@ fun KeyboardScreen(
                         },
                     ),
         ) {
-            // adds a pretty line if you're using the backdrop
-            if (backdropEnabled) {
-                Box(
-                    modifier =
-                        Modifier
-                            .align(Alignment.TopCenter)
-                            .fillMaxWidth()
-                            .height(1.dp)
-                            .background(color = MaterialTheme.colorScheme.surfaceVariant),
-                )
-            }
             val emojiModeLayout = keyboardDefinition.modes.emoji
             if (emojiModeLayout != null) {
                 // Custom Emoji layout provides its own functional row at the bottom
@@ -727,17 +716,6 @@ fun KeyboardScreen(
                         },
                     ),
         ) {
-            // adds a pretty line if you're using the backdrop
-            if (backdropEnabled) {
-                Box(
-                    modifier =
-                        Modifier
-                            .align(Alignment.TopCenter)
-                            .fillMaxWidth()
-                            .height(1.dp)
-                            .background(color = MaterialTheme.colorScheme.surfaceVariant),
-                )
-            }
             Box(
                 modifier =
                     Modifier
@@ -805,17 +783,6 @@ fun KeyboardScreen(
                         },
                     ),
         ) {
-            // adds a pretty line if you're using the backdrop
-            if (backdropEnabled) {
-                Box(
-                    modifier =
-                        Modifier
-                            .align(Alignment.TopCenter)
-                            .fillMaxWidth()
-                            .height(1.dp)
-                            .background(color = MaterialTheme.colorScheme.surfaceVariant),
-                )
-            }
             Box(
                 contentAlignment = keyboardPositionToAlignment(position),
                 modifier =
@@ -943,17 +910,6 @@ fun KeyboardScreen(
                             },
                         ),
             ) {
-                // adds a pretty line if you're using the backdrop
-                if (drawBackdrop) {
-                    Box(
-                        modifier =
-                            Modifier
-                                .align(Alignment.TopCenter)
-                                .fillMaxWidth()
-                                .height(1.dp)
-                                .background(color = MaterialTheme.colorScheme.surfaceVariant),
-                    )
-                }
                 Column(modifier = modifierPositionPadding) {
                     keyboard.arr.forEachIndexed { i, row ->
                         Row {

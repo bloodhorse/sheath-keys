@@ -1020,7 +1020,7 @@ fun KeyboardKey(
                 releasedKey.value?.let { text ->
                     Text(
                         text = text,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.Medium,
                         fontSize = spSize,
                         lineHeight = spSize,
                         color = MaterialTheme.colorScheme.tertiary,
@@ -1096,7 +1096,7 @@ fun KeyText(
                 val spSize = fontSize.toPx.pxToSp
                 Text(
                     text = display.text,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = if (key.size == FontSizeVariant.LARGE) FontWeight.Medium else FontWeight.Normal,
                     fontFamily = display.fontFamily,
                     fontSize = spSize,
                     lineHeight = spSize,
