@@ -117,9 +117,10 @@ fun specialActionKeyItem(center: KeyC): KeyItemC =
 
 val TOGGLE_NUMERIC_MODE_FALSE_KEYC =
     KeyC(
-        display = KeyDisplay.IconDisplay(Icons.Outlined.Abc),
+        display = KeyDisplay.TextDisplay("abc"),
         action = ToggleNumericMode(false),
-        size = LARGE,
+        size = MEDIUM,
+        color = PRIMARY,
     )
 val ABC_KEY_ITEM =
     textEditKeyItem(
@@ -128,10 +129,10 @@ val ABC_KEY_ITEM =
 
 val TOGGLE_NUMERIC_MODE_TRUE_KEYC =
     KeyC(
-        display = KeyDisplay.IconDisplay(Icons.Outlined.Numbers),
+        display = KeyDisplay.TextDisplay("123"),
         action = ToggleNumericMode(true),
-        size = LARGE,
-        color = SECONDARY,
+        size = MEDIUM,
+        color = PRIMARY,
     )
 val NUMERIC_KEY_ITEM =
     textEditKeyItem(
@@ -142,8 +143,8 @@ val TOGGLE_EMOJI_MODE_TRUE_KEYC =
     KeyC(
         display = KeyDisplay.IconDisplay(Icons.Outlined.Mood),
         action = ToggleEmojiMode(true),
-        size = LARGE,
-        color = SECONDARY,
+        size = MEDIUM,
+        color = PRIMARY,
     )
 
 val TOGGLE_CLIPBOARD_MODE_TRUE_KEYC =
@@ -151,7 +152,7 @@ val TOGGLE_CLIPBOARD_MODE_TRUE_KEYC =
         display = KeyDisplay.IconDisplay(Icons.Outlined.Inventory),
         action = ToggleClipboardMode(true),
         size = LARGE,
-        color = SECONDARY,
+        color = PRIMARY,
     )
 
 val TOGGLE_SKETCH_MODE_TRUE_KEYC =
@@ -163,7 +164,7 @@ val TOGGLE_SKETCH_MODE_TRUE_KEYC =
 
 val TOGGLE_SKETCH_MODE_FALSE_KEYC =
     KeyC(
-        display = KeyDisplay.IconDisplay(Icons.Outlined.Abc),
+        display = KeyDisplay.TextDisplay("abc"),
         action = ToggleSketchMode(false),
         size = LARGE,
     )
@@ -212,7 +213,7 @@ val EMOJI_KEY_ITEM =
 
 val TOGGLE_EMOJI_MODE_FALSE_KEYC =
     KeyC(
-        display = KeyDisplay.IconDisplay(Icons.Outlined.Abc),
+        display = KeyDisplay.TextDisplay("abc"),
         action = ToggleEmojiMode(false),
         size = LARGE,
     )
@@ -284,7 +285,7 @@ val BACKSPACE_KEYC =
         display = KeyDisplay.IconDisplay(Icons.AutoMirrored.Outlined.KeyboardBackspace),
         action = DeleteKeyAction,
         size = LARGE,
-        color = SECONDARY,
+        color = PRIMARY,
     )
 
 val BACKSPACE_KEYC_MUTED =
@@ -298,7 +299,7 @@ val BACKSPACE_TEXT_MANIPULATION_KEYC =
         display = KeyDisplay.IconDisplay(Icons.AutoMirrored.Outlined.KeyboardBackspace),
         action = KeyAction.DeleteViaTextManipulation,
         size = LARGE,
-        color = SECONDARY,
+        color = PRIMARY,
     )
 val DELETE_CHARACTER_AFTER_CURSOR_KEYC =
     KeyC(
@@ -450,7 +451,7 @@ val RETURN_KEYC =
         display = KeyDisplay.IconDisplay(Icons.AutoMirrored.Outlined.KeyboardReturn),
         action = IMECompleteAction,
         size = LARGE,
-        color = SECONDARY,
+        color = PRIMARY,
     )
 val RETURN_KEY_ITEM =
     KeyItemC(
@@ -567,7 +568,7 @@ val BACKSPACE_TYPESPLIT_KEY_ITEM =
                         ),
                     ),
                 size = LARGE,
-                color = SECONDARY,
+                color = PRIMARY,
             ),
         swipeType = FOUR_WAY_CROSS,
         slideType = SlideType.DELETE,

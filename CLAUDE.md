@@ -22,6 +22,9 @@ all of it is defaults, no new settings; a user can still pick any upstream theme
   ignored so the keys run to the screen's edge.
 - `KeyboardScreen.kt`: the 1 dp "pretty line" over the backdrop is gone.
 - `KeyboardKey.kt`: the big letter is Medium weight, everything else Normal (upstream bolds all of it).
+- `keyboards/CommonKeys.kt` (shared by every layout): the controller column's centers (backspace, return,
+  mode keys) are white instead of dim; the numeric toggle reads `123` / `abc` in text at medium size
+  instead of Material icons; the emoji face is medium, not large. their flick icons stay dim.
 - `app/build.gradle.kts`: `applicationId` is `com.bekh.sheath.keys` (debug adds `.debug`); the Kotlin
   namespace stays `com.dessalines.thumbkey` so upstream merges stay painless.
 
@@ -38,11 +41,16 @@ adb shell ime set com.bekh.sheath.keys.debug/com.dessalines.thumbkey.IMEService
 
 the emulator, and how to check the keyboard by script, is in `~/tower/forge/sheath/docs/build.md`.
 
+`shots/` holds the current look: `letters.png`, `numeric.png`.
+
 ## gotchas
 
 - the wrapper is needed: AGP 9.5 wants gradle 9.9, brew's gradle 8 can't build this. the first run
   downloads it and installs SDK platform 37 by itself.
 - the defaults are SQL column defaults (Room's `@ColumnInfo(defaultValue)`), so they only apply to a
-  fresh database. changing one changes Room's schema hash: an installed build then crashes on open with
-  "Room cannot verify the data integrity". `adb shell pm clear com.bekh.sheath.keys.debug` and re-set
-  the IME. the exported schema in `app/schemas/` changes with it; commit that too.
+  fresh database: a changed default doesn't show on an installed build until
+  `adb shell pm clear com.bekh.sheath.keys.debug` (then `ime enable` / `ime set` again).
+- a debug build cold-starts slowly on the emulator (ART verifies the 200 layout classes for seconds).
+  `mInputShown=true` flips long before anything is drawn, and a tap aimed at a key then lands on the app
+  and dismisses the keyboard. wait for the window instead:
+  `until adb shell dumpsys window InputMethod | grep -q isOnScreen=true; do sleep 1; done`.
