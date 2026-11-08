@@ -5,11 +5,6 @@ import android.os.Build
 import android.util.Log
 import android.view.HapticFeedbackConstants
 import android.view.KeyEvent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -978,56 +973,8 @@ fun KeyboardKey(
             }
         }
 
-        // The animated box that fades out.
-        AnimatedVisibility(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .background(color = Color(0, 0, 0, 0)),
-            visible = releasedKey.value != null && !isPasswordField,
-            enter = EnterTransition.None,
-            exit = fadeOut(tween(animationSpeed)),
-        ) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .background(color = MaterialTheme.colorScheme.tertiaryContainer),
-            ) {}
-        }
-
-        // The animated key letter that falls downwards and then fades out.
-        AnimatedVisibility(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .background(color = Color(0, 0, 0, 0)),
-            visible = releasedKey.value != null && !isPasswordField,
-            enter = slideInVertically(tween(animationSpeed)),
-            exit = fadeOut(tween(animationSpeed)),
-        ) {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                val spSize =
-                    fontSizeVariantToFontSize(
-                        fontSizeVariant = FontSizeVariant.LARGE,
-                        keySize = keySize.dp,
-                        isUpperCase = false,
-                    ).toPx.pxToSp
-                releasedKey.value?.let { text ->
-                    Text(
-                        text = text,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = spSize,
-                        lineHeight = spSize,
-                        color = MaterialTheme.colorScheme.tertiary,
-                    )
-                }
-            }
-        }
+        // sheath: no press animation. upstream flashed the key and dropped the typed letter down it;
+        // here things appear and vanish, they don't move.
     }
 }
 

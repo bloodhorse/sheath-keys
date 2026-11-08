@@ -1518,13 +1518,14 @@ fun magma(): Pair<ColorScheme, ColorScheme> {
     return Pair(light, dark)
 }
 
-// sheath: pure black, tiles barely off it, white and greys, no tint. same for light and dark.
+// sheath: a dark frost panel (drawn by the IME window, see IMEService.dressPanel) with keys of
+// translucent white on it and a hairline edge, after Wurstfinger. no tint. same for light and dark.
 fun sheath(): Pair<ColorScheme, ColorScheme> {
     val black = Color(0xFF000000)
-    val tile = Color(0xFF121212)
-    val pressed = Color(0xFF2C2C2C)
+    val tile = Color(0x0FFFFFFF)
+    val pressed = Color(0x2EFFFFFF)
     val white = Color(0xFFFFFFFF)
-    val dim = Color(0xFF9A9A9A)
+    val dim = Color(0xFFB5B5B7)
     val scheme =
         darkColorScheme(
             primary = white,
@@ -1538,7 +1539,7 @@ fun sheath(): Pair<ColorScheme, ColorScheme> {
             onSecondaryContainer = white,
             tertiary = white,
             onTertiary = black,
-            tertiaryContainer = Color(0xFF1E1E1E),
+            tertiaryContainer = Color(0x1FFFFFFF),
             onTertiaryContainer = white,
             background = black,
             onBackground = white,
@@ -1553,14 +1554,14 @@ fun sheath(): Pair<ColorScheme, ColorScheme> {
             onError = black,
             errorContainer = Color(0xFF2C2C2C),
             onErrorContainer = white,
-            outline = Color(0xFF2A2A2A),
+            outline = Color(0x21FFFFFF),
             outlineVariant = Color(0xFF1A1A1A),
             scrim = black,
             surfaceBright = Color(0xFF1C1C1C),
             surfaceDim = black,
             surfaceContainerLowest = black,
             surfaceContainerLow = Color(0xFF0A0A0A),
-            surfaceContainer = tile,
+            surfaceContainer = Color(0xFF121212),
             surfaceContainerHigh = Color(0xFF181818),
             surfaceContainerHighest = Color(0xFF1E1E1E),
         )

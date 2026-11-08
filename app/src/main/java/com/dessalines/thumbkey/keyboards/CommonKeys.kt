@@ -123,7 +123,7 @@ val TOGGLE_NUMERIC_MODE_FALSE_KEYC =
         color = PRIMARY,
     )
 val ABC_KEY_ITEM =
-    textEditKeyItem(
+    sheathEditKeyItem(
         center = TOGGLE_NUMERIC_MODE_FALSE_KEYC,
     )
 
@@ -134,8 +134,20 @@ val TOGGLE_NUMERIC_MODE_TRUE_KEYC =
         size = MEDIUM,
         color = PRIMARY,
     )
+// sheath: four edit flicks instead of six, after Wurstfinger: undo and redo are gone
+fun sheathEditKeyItem(center: KeyC): KeyItemC =
+    KeyItemC(
+        backgroundColor = SURFACE_VARIANT,
+        swipeType = EIGHT_WAY,
+        center = center,
+        topLeft = SELECT_ALL_KEYC,
+        top = COPY_KEYC,
+        topRight = CUT_KEYC,
+        bottom = PASTE_KEYC,
+    )
+
 val NUMERIC_KEY_ITEM =
-    textEditKeyItem(
+    sheathEditKeyItem(
         center = TOGGLE_NUMERIC_MODE_TRUE_KEYC,
     )
 
@@ -206,9 +218,22 @@ val TOGGLE_HIDE_LETTERS_KEYC =
         color = MUTED,
     )
 
+// sheath: no emoji key and no drawer of nine icons. the top-right key every layout shares keeps the
+// name but is the globe now: a tap cycles the chosen layouts, a swipe down hides the keyboard, a
+// swipe up opens the settings.
 val EMOJI_KEY_ITEM =
-    specialActionKeyItem(
-        center = TOGGLE_EMOJI_MODE_TRUE_KEYC,
+    KeyItemC(
+        backgroundColor = SURFACE_VARIANT,
+        swipeType = TWO_WAY_VERTICAL,
+        center =
+            KeyC(
+                display = KeyDisplay.IconDisplay(Icons.Outlined.Language),
+                action = SwitchLanguage,
+                size = MEDIUM,
+                color = PRIMARY,
+            ),
+        top = GOTO_SETTINGS_KEYC,
+        bottom = HIDE_KEYBOARD_KEYC,
     )
 
 val TOGGLE_EMOJI_MODE_FALSE_KEYC =

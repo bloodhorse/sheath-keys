@@ -29,6 +29,17 @@ import com.dessalines.thumbkey.utils.TAG
 import com.dessalines.thumbkey.utils.ThumbKeyClipboardManager
 import com.dessalines.thumbkey.utils.resolveKeyboardDefinition
 import com.dessalines.thumbkey.utils.toBool
+import android.graphics.drawable.GradientDrawable
+import android.os.Build
+import android.view.WindowManager
+import java.util.function.Consumer
+import com.dessalines.thumbkey.utils.PANEL_INSET_DP
+import android.view.WindowInsets
+
+private const val PANEL_RADIUS_DP = 22f
+private const val PANEL_BLUR_DP = 40f
+private const val PANEL_FROST = 0xCC101012.toInt()
+private const val PANEL_SOLID = 0xF2101012.toInt()
 
 class IMEService :
     InputMethodService(),
@@ -48,6 +59,8 @@ class IMEService :
         }
 
         val view = ComposeKeyboardView(this, settingsRepo, clipboardRepo)
+        val inset = (PANEL_INSET_DP * resources.displayMetrics.density).toInt()
+        view.setPadding(inset, inset, inset, inset)
         window?.window?.decorView?.let { decorView ->
             decorView.setViewTreeLifecycleOwner(this)
             decorView.setViewTreeViewModelStoreOwner(this)
@@ -99,6 +112,7 @@ class IMEService :
         sketchState.list = null
         val view = this.setupView()
         this.setInputView(view)
+        dressPanel()
     }
 
     // Lifecycle Methods
@@ -120,7 +134,43 @@ class IMEService :
         clipboardManager?.clearExpired()
     }
 
+    // sheath: the keys sit on a frosted panel. the IME window is exactly the keyboard's rectangle and
+    // already translucent, so its background is the panel: a rounded dark tint, and the screen behind
+    // it blurred. Android rounds the blur to the background drawable's outline, so the drawable goes
+    // on first. when blur is off (battery saver, an old Android) the tint goes nearly solid instead.
+    private val panelBackground = GradientDrawable()
+    private var blurListener: Consumer<Boolean>? = null
+
+    private fun dressPanel() {
+        val w = window?.window ?: return
+        val density = resources.displayMetrics.density
+        panelBackground.cornerRadius = PANEL_RADIUS_DP * density
+        panelBackground.setColor(PANEL_SOLID)
+        w.setBackgroundDrawable(panelBackground)
+        // API 35+: an IME that hides its caption bar takes the system's back and switcher buttons
+        // off its bottom edge, where they'd hang over the space bar and return
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            w.insetsController?.hide(WindowInsets.Type.captionBar())
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val wm = getSystemService(WindowManager::class.java)
+            val frost = { blur: Boolean ->
+                panelBackground.setColor(if (blur) PANEL_FROST else PANEL_SOLID)
+                w.setBackgroundBlurRadius(if (blur) (PANEL_BLUR_DP * density).toInt() else 0)
+            }
+            frost(wm.isCrossWindowBlurEnabled)
+            if (blurListener == null) {
+                val listener = Consumer<Boolean> { frost(it) }
+                wm.addCrossWindowBlurEnabledListener(listener)
+                blurListener = listener
+            }
+        }
+    }
+
     override fun onDestroy() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            blurListener?.let { getSystemService(WindowManager::class.java).removeCrossWindowBlurEnabledListener(it) }
+        }
         clipboardManager?.stopListening()
         clipboardManager = null
         super.onDestroy()
