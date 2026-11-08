@@ -973,7 +973,7 @@ fun KeyboardKey(
             }
         }
 
-        // sheath: no press animation. upstream flashed the key and dropped the typed letter down it;
+        // thevoid: no press animation. upstream flashed the key and dropped the typed letter down it;
         // here things appear and vanish, they don't move.
     }
 }

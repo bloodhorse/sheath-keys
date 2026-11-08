@@ -136,7 +136,7 @@ class IMEService :
         clipboardManager?.clearExpired()
     }
 
-    // sheath: the keys sit on a frosted panel. the IME window is exactly the keyboard's rectangle and
+    // thevoid: the keys sit on a frosted panel. the IME window is exactly the keyboard's rectangle and
     // already translucent, so its background is the panel: a rounded dark tint, and the screen behind
     // it blurred. Android rounds the blur to the background drawable's outline, so the drawable goes
     // on first. when blur is off (battery saver, an old Android) the tint goes nearly solid instead.

@@ -18,7 +18,7 @@ android {
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "com.bekh.sheath.keys"
+        applicationId = "com.bekh.thevoid.keys"
         minSdk = 24
         targetSdk = 37
         versionCode = 190

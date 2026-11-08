@@ -123,7 +123,7 @@ val TOGGLE_NUMERIC_MODE_FALSE_KEYC =
         color = PRIMARY,
     )
 val ABC_KEY_ITEM =
-    sheathEditKeyItem(
+    thevoidEditKeyItem(
         center = TOGGLE_NUMERIC_MODE_FALSE_KEYC,
     )
 
@@ -134,8 +134,8 @@ val TOGGLE_NUMERIC_MODE_TRUE_KEYC =
         size = MEDIUM,
         color = PRIMARY,
     )
-// sheath: four edit flicks instead of six, after Wurstfinger: undo and redo are gone
-fun sheathEditKeyItem(center: KeyC): KeyItemC =
+// thevoid: four edit flicks instead of six, after Wurstfinger: undo and redo are gone
+fun thevoidEditKeyItem(center: KeyC): KeyItemC =
     KeyItemC(
         backgroundColor = SURFACE_VARIANT,
         swipeType = EIGHT_WAY,
@@ -147,7 +147,7 @@ fun sheathEditKeyItem(center: KeyC): KeyItemC =
     )
 
 val NUMERIC_KEY_ITEM =
-    sheathEditKeyItem(
+    thevoidEditKeyItem(
         center = TOGGLE_NUMERIC_MODE_TRUE_KEYC,
     )
 
@@ -218,7 +218,7 @@ val TOGGLE_HIDE_LETTERS_KEYC =
         color = MUTED,
     )
 
-// sheath: no emoji key and no drawer of nine icons. the top-right key every layout shares keeps the
+// thevoid: no emoji key and no drawer of nine icons. the top-right key every layout shares keeps the
 // name but is the globe now: a tap cycles the chosen layouts, a swipe down hides the keyboard, a
 // swipe up opens the settings.
 val EMOJI_KEY_ITEM =

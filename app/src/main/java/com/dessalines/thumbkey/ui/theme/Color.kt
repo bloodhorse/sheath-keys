@@ -1518,9 +1518,9 @@ fun magma(): Pair<ColorScheme, ColorScheme> {
     return Pair(light, dark)
 }
 
-// sheath: a dark frost panel (drawn by the IME window, see IMEService.dressPanel) with keys of
+// thevoid: a dark frost panel (drawn by the IME window, see IMEService.dressPanel) with keys of
 // translucent white on it and a hairline edge, after Wurstfinger. no tint. same for light and dark.
-fun sheath(): Pair<ColorScheme, ColorScheme> {
+fun thevoid(): Pair<ColorScheme, ColorScheme> {
     val black = Color(0xFF000000)
     val tile = Color(0x0FFFFFFF)
     val pressed = Color(0x2EFFFFFF)
