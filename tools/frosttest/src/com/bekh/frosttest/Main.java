@@ -14,7 +14,9 @@ public class Main extends Activity {
     protected void onCreate(Bundle b) {
         super.onCreate(b);
         FrameLayout root = new FrameLayout(this);
-        root.setBackground(new GradientDrawable(GradientDrawable.Orientation.TL_BR,
+        // --ez black true: pure black, like the sheath launcher
+        if (getIntent().getBooleanExtra("black", false)) root.setBackgroundColor(0xFF000000);
+        else root.setBackground(new GradientDrawable(GradientDrawable.Orientation.TL_BR,
             new int[] {0xFF14142B, 0xFFE0245E, 0xFFF5A623, 0xFF17BF63, 0xFF1DA1F2, 0xFF6A0DAD}));
         TextView t = new TextView(this);
         t.setText("FROST\nTEST\nsheath ▮▮▮▮\nkeys ▮▮▮▮▮");
